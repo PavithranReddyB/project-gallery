@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Uppercase Converter</title>
+</head>
+<body>
+    <input type="text" id="inputText" onkeyup="convertToUppercase()">
+    <input type="text" id="outputText" disabled>
+    
+    <script>
+        function convertToUppercase() {
+            var inputText = document.getElementById("inputText").value;
+            var upperText = inputText.toUpperCase();
+            document.getElementById("outputText").value = upperText;
+        }
+    </script>
+</body>
+</html>

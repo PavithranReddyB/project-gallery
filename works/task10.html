@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDENTS PERSONAL INFO</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+    }
+    .container {
+        width: 50%;
+        margin: auto;
+        padding: 20px;
+    }
+    .title {
+        background-color: #f5f3ee;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+    .input-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    input {
+        width: 48%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    button {
+        width: 48%;
+        padding: 12px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+        border-radius: 0; /* Sharp edges */
+    }
+    .green-btn {
+        background-color: #28a745;
+        color: white;
+    }
+    .red-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+    .blue-btn {
+        background-color: #007bff;
+        color: white;
+        width: 100%;
+        margin-top: 10px;
+    }
+    #info {
+        margin-top: 20px;
+    }
+    .student-card {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px auto;
+        width: 50%;
+        background-color: #fff;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title">STUDENTS PERSONAL INFO</div>
+    
+    <div class="input-container">
+        <input id="name" placeholder="Enter Name" />
+        <input id="dob" placeholder="Enter Date of Birth" />
+    </div>
+    <div class="input-container">
+        <input id="email" type="email" placeholder="Enter Email" />
+        <input id="phone" type="tel" placeholder="Enter Phone Number" />
+    </div>
+
+    <div class="button-container">
+        <button class="green-btn" onclick="insert()">INSERT INFO</button>
+        <button class="red-btn" onclick="clearInputs()">CLEAR INPUTS</button>
+    </div>
+    <div class="button-container">
+        <button class="green-btn" onclick="displayStudents()">SHOW ALL</button>
+        <button class="red-btn" onclick="clearDisplay()">CLEAR DISPLAY</button>
+    </div>
+
+    <button class="blue-btn" onclick="searchStudent()">SEARCH</button>
+</div>
+
+<div id="info"></div>
+
+<script>
+    let students = {};
+
+    function insert() {
+        let name = document.getElementById("name").value.trim();
+        let dob = document.getElementById("dob").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+
+        if (!name || !dob || !email || !phone) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        if (students[name]) {
+            alert("Student with this name already exists.");
+            return;
+        }
+
+        students[name] = { name, dob, email, phone };
+        clearInputs();
+    }
+
+    function displayStudents() {
+        let infoDiv = document.getElementById("info");
+        infoDiv.innerHTML = "<h2>Student List</h2>";
+
+        for (let key in students) {
+            let student = students[key];
+            infoDiv.innerHTML += `
+                <div class="student-card">
+                    <p><strong>${student.name}</strong> (Born: ${student.dob})<br>
+                    Email: ${student.email} | Phone: ${student.phone}</p>
+                </div>
+            `;
+        }
+    }
+
+    function clearInputs() {
+        document.getElementById("name").value = "";
+        document.getElementById("dob").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("phone").value = "";
+    }
+
+    function clearDisplay() {
+        document.getElementById("info").innerHTML = "";
+    }
+
+    function searchStudent() {
+        let searchName = prompt("Enter the student name to search:").trim();
+        let infoDiv = document.getElementById("info");
+
+        if (searchName && students[searchName]) {
+            let student = students[searchName];
+            infoDiv.innerHTML = `<h2>Search Result</h2>
+                <div class="student-card">
+                    <p><strong>${student.name}</strong> (Born: ${student.dob})<br>
+                    Email: ${student.email} | Phone: ${student.phone}</p>
+                </div>`;
+        } else {
+            alert("Student not found.");
+        }
+    }
+</script>
+
+</body>
+</html>
+
+
+
+

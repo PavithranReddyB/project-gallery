@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <body>
+            <input placeholder="Enter A" id="input_a"/>
+            <input placeholder="Enter B" id="input_b"/>
+            <button onclick = "generate_random_value();">Generate Random value</button>
+            <div id="output_div"></div>
+            <script>
+                let colors = ["purple", "pink", "orange", "blue", "red"];
+                
+                function generate_random_value(){
+                    let a = parseInt(document.getElementById("input_a").value);
+                    let b = parseInt(document.getElementById("input_b").value);
+                    let random_value = Math.floor((b - a) * Math.random() + a);
+
+                    document.getElementById("output_div").innerHTML = random_value;
+
+                    let size = colors.length;
+                    let idx = Math.floor(Math.random() * size);
+                    document.getElementById("output_div").style = "color:" + colors[idx];
+                    setTimeout(function() {
+                        document.getElementById("output_div").innerHTML = "";
+                    }, 5000);
+                }
+            </script>
+        </body>
+    </head>
+</html>

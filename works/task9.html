@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Info</title>
+<style>
+body {
+text-align: center;
+margin-top: 50px;
+}
+#info {
+margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<div>
+<h1>THE STUDENT PERSONAL INFORMATION</h1>
+<input id="name" placeholder="Enter Name" />
+<input id="dob" placeholder="Enter Date of Birth" />
+<input id="email" placeholder="Enter Email" />
+<input id="phone" placeholder="Enter Phone Number" />
+<button onclick="insert()">Insert Info</button>
+</div>
+
+<div id="info"></div>
+
+<script>
+// Common object to hold multiple students
+let students = {};
+
+function insert() {
+let name = document.getElementById("name").value;
+let dob = document.getElementById("dob").value;
+let email = document.getElementById("email").value;
+let phone = document.getElementById("phone").value;
+
+if (name && dob && email && phone) {
+// Create student object dynamically
+students[name] = {
+name: name,
+dob: dob,
+email: email,
+phone: phone,
+description: function () {
+return `<p><strong>${this.name}</strong> (Born: ${this.dob})<br>
+Email: ${this.email} | Phone: ${this.phone}</p>`;
+}
+};
+
+// Clear input fields
+document.getElementById("name").value = "";
+document.getElementById("dob").value = "";
+document.getElementById("email").value = "";
+document.getElementById("phone").value = "";
+
+// Update the UI
+displayStudents();
+} else {
+alert("Please fill in all fields.");
+}
+}
+
+function displayStudents() {
+let infoDiv = document.getElementById("info");
+infoDiv.innerHTML = "<h2>Student List</h2>";
+for (let key in students) {
+infoDiv.innerHTML += students[key].description();
+}
+}
+</script>
+</body>
+</html>

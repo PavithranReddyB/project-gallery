@@ -1,0 +1,36 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <title>Task Stack</title>
+</head>
+<body>
+    <input type="text" id="taskInput" placeholder="Enter task">
+    <button onclick="addTask()">Add Task</button>
+    <button onclick="undoTask()">Undo Task</button>
+    <p>Process Line: <span id="taskDisplay"></span></p>
+
+    <script>
+        let taskStack = [];
+
+        function addTask() {
+            let taskInput = document.getElementById("taskInput").value;
+            if (taskInput) {
+                taskStack.push(taskInput);
+                document.getElementById("taskInput").value = "";
+                updateDisplay();
+            }
+        }
+
+        function undoTask() {
+            if (taskStack.length > 0) {
+                taskStack.pop();
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById("taskDisplay").textContent = taskStack.join(", ");
+        }
+    </script>
+</body>
+</html>

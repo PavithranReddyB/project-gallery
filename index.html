@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <!-- Write your CSS code in the designated file -->
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <!-- Write your HTML code here -->
-        <div class="header">
-            <h1>Class Works</h1>
-            <div class="nav-links">
-                <a href="#" data-project="task1" onclick="loadProject('task1')">Project 1</a>
-                <a href="#" data-project="task2" onclick="loadProject('task2')">Project 2</a>
-                <a href="#" data-project="task3" onclick="loadProject('task3')">Project 3</a>
-            </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-brand">
+            <h1>Project Gallery</h1>
         </div>
-        <div class="content" id="projectContent">
-            <p>Select a link to display here.</p>
+        <nav class="navbar-menu" id="project-list"></nav>
+    </header>
+    <main class="content">
+        <div class="project-header">
+            <h2 id="project-title">Welcome to My Project Gallery</h2>
         </div>
-
-        <!-- Write your JavaScript code in the designated file -->
-        <script src="script.js"></script>
-    </body>
+        <div class="project-content" id="project-details">
+            <!-- Landing page content will be inserted here by JavaScript -->
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
 </html>

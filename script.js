@@ -1,55 +1,58 @@
-const works = {
-    "task1": {
-        "title": "Project 1",
-        "url": "works/task1/index.html",
-        "content": {
-            "title": "Task 1",
-            "backgroundColor": "#00ff00" // Green for Project 1 (Task 1)
-        }
-    },
-    "task2": {
-        "title": "Project 2",
-        "url": "works/task2/index.html",
-        "content": {
-            "title": "Task 2",
-            "backgroundColor": "#ff0000" // Red for Project 2 (Task 2)
-        }
-    },
-    "task3": {
-        "title": "Project 3",
-        "url": "works/task3/index.html",
-        "content": {
-            "title": "Task 3",
-            "backgroundColor": "#ffa500" // Orange for Project 3 (Task 3)
-        }
-    }
-};
+document.addEventListener('DOMContentLoaded', () => {
+    const projectList = document.getElementById('project-list');
+    const projectTitle = document.getElementById('project-title');
+    const projectDetails = document.getElementById('project-details');
+    const navbar = document.querySelector('.navbar');
+    const content = document.querySelector('.content');
 
-function loadProject(projectId) {
-    // Clear previous active states for project links
-    const projectLinks = document.querySelectorAll('.nav-links a');
-    projectLinks.forEach(link => link.classList.remove('active'));
-
-    // Set the active project link
-    const activeLink = document.querySelector(`.nav-links a[data-project="${projectId}"]`);
-    if (activeLink) {
-        activeLink.classList.add('active');
+    // Dynamically adjust content padding
+    function adjustContentPadding() {
+        const navbarHeight = navbar.offsetHeight;
+        content.style.paddingTop = `${navbarHeight + 20}px`;
     }
 
-    // Update the content area
-    const projectContent = document.getElementById('projectContent');
+    adjustContentPadding();
+    window.addEventListener('resize', adjustContentPadding);
 
-    if (projectId && works[projectId]) {
-        const projectData = works[projectId].content;
-        projectContent.innerHTML = `<h1>${projectData.title}</h1>`;
-        projectContent.style.backgroundColor = projectData.backgroundColor;
-    } else {
-        projectContent.innerHTML = `<p>Select a link to display here.</p>`;
-        projectContent.style.backgroundColor = '#f0f0ff';
+    // Display the default landing page
+    function displayLandingPage() {
+        projectTitle.textContent = "Welcome to My Project Gallery";
+        projectDetails.innerHTML = `
+            <div class="landing-page">
+                <h3>Explore My Work</h3>
+                <p>This gallery showcases a collection of my projects, ranging from basic HTML to advanced JavaScript applications. Select a project from the menu above to view it.</p>
+                <a href="#" class="cta-button">Select a Project</a>
+            </div>
+        `;
     }
-}
 
-// Load the default state when the page loads
-window.onload = function() {
-    loadProject(); // Show the initial "Select a link to display here" message
-};
+    // Display a project when selected
+    function displayProject(project) {
+        projectTitle.textContent = project.title;
+        projectDetails.innerHTML = `
+            <iframe src="${project.path}" frameborder="0"></iframe>
+        `;
+    }
+
+    // Fetch projects
+    fetch('projects.json')
+        .then(response => response.json())
+        .then(projects => {
+            projects.forEach(project => {
+                const link = document.createElement('a');
+                link.textContent = project.title;
+                link.href = '#';
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    displayProject(project);
+                    document.querySelectorAll('.navbar-menu a').forEach(a => a.classList.remove('active'));
+                    link.classList.add('active');
+                });
+                projectList.appendChild(link);
+            });
+
+            // Display the landing page by default
+            displayLandingPage();
+        })
+        .catch(error => console.error('Error loading projects:', error));
+});
